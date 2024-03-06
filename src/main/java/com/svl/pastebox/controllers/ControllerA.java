@@ -1,29 +1,34 @@
 package com.svl.pastebox.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.svl.pastebox.api.request.RequestDataTimeStatus;
+import com.svl.pastebox.api.response.ResponseDataStatus;
+import com.svl.pastebox.api.response.ResponseUrl;
+import com.svl.pastebox.services.ServiceA;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ControllerA {
 
+    private final ServiceA serviceA;
+
+    public ControllerA(ServiceA serviceA) {
+        this.serviceA = serviceA;
+    }
+
     @GetMapping("/")
-    public List<String> getAllPublic() {
-        return new ArrayList<>();
+    public List<ResponseDataStatus> getAllPublic() {
+        return serviceA.getAllPublic();
     }
 
     @GetMapping("/{hash}")
-    public String index(@PathVariable("hash") String s) {
-        return s;
+    public ResponseDataStatus getByHash(@PathVariable String hash) {
+        return serviceA.getByHash(hash);
     }
 
     @PostMapping("/")
-    public String getLink() {
-        return "";
+    public ResponseUrl add(@RequestBody RequestDataTimeStatus requestDataTimeStatus) {
+        return serviceA.create(requestDataTimeStatus);
     }
 }
