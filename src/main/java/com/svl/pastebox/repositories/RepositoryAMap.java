@@ -45,6 +45,7 @@ public class RepositoryAMap implements IntRepositoryA{
         do {
             newHash = getNewHash();
         } while (map.containsKey(newHash));
+
         o.setHash(newHash);
 
         map.put(o.getHash(), o);
