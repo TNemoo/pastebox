@@ -1,5 +1,6 @@
 package com.svl.pastebox.repositories;
 
+import com.svl.pastebox.exeptions.NotFoundEntityException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -13,14 +14,14 @@ import java.util.stream.Collectors;
 @Repository
 public class RepositoryAMap implements IntRepositoryA{
 
-    private Random random = new Random();
+    private final Random random = new Random();
     private final Map<String, EntityA> map = new ConcurrentHashMap<>();
 
     @Override
     public EntityA getByHash(String hash) {
         EntityA o = map.get(hash);
-//        if (o == null)
-//            throw new NotFoundEntityException("The hash equals null");
+        if (o == null)
+            throw new NotFoundEntityException("The hash equals null");
         return o;
     }
 
